@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政务数据法规对比分析展示平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif SC', 'Microsoft YaHei', serif;
+        }
+        
+        body {
+            background: 
+                linear-gradient(135deg, rgba(26,42,108,0.85), rgba(44,62,80,0.85), rgba(74,100,145,0.85)),
+                url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #1a5fad, #1a2a6c, #0d1b45);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gov-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1a5fad, #0d1b45);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid #fff;
+        }
+        
+        .logo-icon i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        .logo-text {
+            text-align: left;
+        }
+        
+        .logo-text h2 {
+            font-size: 1.8rem;
+            color: #1a2a6c;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            font-size: 1.1rem;
+            color: #4a6491;
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #0d1b45, #1a5fad);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, #1a5fad, #0d1b45);
+            border-radius: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 500;
+        }
+        
+        .intro {
+            font-size: 1.1rem;
+            color: #444;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.8;
+            padding: 0 20px;
+        }
+        
+        .gov-badge {
+            display: inline-block;
+            background: #1a2a6c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 550px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .card-header {
+            padding: 25px;
+            color: white;
+            position: relative;
+        }
+        
+        .ppt .card-header {
+            background: linear-gradient(135deg, #7a4b9a, #5c2d86);
+        }
+        
+        .excel .card-header {
+            background: linear-gradient(135deg, #1a7d4c, #166c40);
+        }
+        
+        .card-header i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .card-desc {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .card-content {
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #444;
+            font-size: 1.05rem;
+        }
+        
+        .features {
+            list-style-type: none;
+            margin-bottom: 25px;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .features li:last-child {
+            border-bottom: none;
+        }
+        
+        .features li i {
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: #1a5fad;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #1a5fad, #0d1b45);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(26, 95, 173, 0.4);
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 173, 0.6);
+            background: linear-gradient(135deg, #0d1b45, #1a5fad);
+        }
+        
+        .ppt .btn {
+            background: linear-gradient(135deg, #5c2d86, #7a4b9a);
+            box-shadow: 0 5px 15px rgba(92, 45, 134, 0.4);
+        }
+        
+        .ppt .btn:hover {
+            background: linear-gradient(135deg, #7a4b9a, #5c2d86);
+            box-shadow: 0 8px 20px rgba(92, 45, 134, 0.6);
+        }
+        
+        .excel .btn {
+            background: linear-gradient(135deg, #166c40, #1a7d4c);
+            box-shadow: 0 5px 15px rgba(22, 108, 64, 0.4);
+        }
+        
+        .excel .btn:hover {
+            background: linear-gradient(135deg, #1a7d4c, #166c40);
+            box-shadow: 0 8px 20px rgba(22, 108, 64, 0.6);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .qr-codes {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .qr-code:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .qr-code p {
+            font-weight: 500;
+            color: #444;
+            margin-top: 8px;
+        }
+        
+        .gov-seal {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Emblem_of_Suzhou.svg/1200px-Emblem_of_Suzhou.svg.png') no-repeat center;
+            background-size: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .national-banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(206, 17, 38, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+            margin: 15px auto 20px;
+            max-width: 500px;
+            border: 1px solid rgba(206, 17, 38, 0.2);
+        }
+        
+        .national-banner i {
+            color: #ce1126;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .national-banner p {
+            font-size: 1rem;
+            color: #ce1126;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .card {
+                max-width: 100%;
+            }
+            
+            .qr-codes {
+                gap: 20px;
+            }
+            
+            .qr-code img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .gov-logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .logo-text {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="gov-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h2>苏州市政府</h2>
+                        <p>政务数据管理办公室</p>
+                    </div>
+                </div>
+                
+                <h1>政务数据法规对比分析展示平台</h1>
+                <p class="subtitle">苏州公共数据管理法规与国家条例深度对比分析</p>
+                
+                <div class="national-banner">
+                    <i class="fas fa-flag"></i>
+                    <p>依法治国 · 数据惠民 · 政务公开 · 服务民生</p>
+                </div>
+                
+                <p class="intro">本平台提供对苏州公共数据管理法规与国家条例的全面对比分析，包含详细的数据对比表格和可视化分析展示，帮助用户清晰理解地方性法规与国家政策之间的异同点及实施要点。</p>
+                <div class="gov-badge">政府认证 · 权威发布 · 数据安全</div>
+            </div>
+        </header>
+        
+        <div class="cards-container">
+            <div class="card ppt">
+                <div class="card-header">
+                    <i class="fas fa-file-powerpoint"></i>
+                    <h2 class="card-title">PPT展示文档</h2>
+                    <p class="card-desc">苏州公共数据管理法规与国家条例对比分析</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-content">该PPT详细分析了苏州公共数据管理法规与国家条例的异同点，包含立法背景、核心条款对比、实施难点分析等内容，通过可视化图表清晰展示关键数据。</p>
+                    
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> 核心条款逐条对比分析</li>
+                        <li><i class="fas fa-check-circle"></i> 立法背景与目标差异解析</li>
+                        <li><i class="fas fa-check-circle"></i> 实施路径与挑战可视化展示</li>
+                        <li><i class="fas fa-check-circle"></i> 政策建议与未来展望</li>
+                    </ul>
+                    
+                    <a href="https://docs.qq.com/document/DR1BNcVJSZkVjV1FY" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> 查看PPT文档
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card excel">
+                <div class="card-header">
+                    <i class="fas fa-file-excel"></i>
+                    <h2 class="card-title">Excel数据表格</h2>
+                    <p class="card-desc">政务数据法规对比分析详细数据</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-content">该Excel表格包含完整的法规条款对比数据，涵盖数据分类、管理权限、安全要求、实施时间表等核心维度，提供详细的数据支持和分析基础。</p>
+                    
+                    <ul class="features">
+                        <li><i class="fas fa-check-circle"></i> 200+条款详细对比数据</li>
+                        <li><i class="fas fa-check-circle"></i> 10个维度的量化分析指标</li>
+                        <li><i class="fas fa-check-circle"></i> 实施时间线与责任主体</li>
+                        <li><i class="fas fa-check-circle"></i> 可交互的数据筛选与分析</li>
+                    </ul>
+                    
+                    <a href="https://docs.qq.com/sheet/DR01ES0VpaGJuRE5z" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> 查看Excel表格
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="qr-codes">
+            <div class="qr-code">
+                <div style="width: 150px; height: 150px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #eee;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-file-powerpoint" style="font-size: 50px; color: #5c2d86;"></i>
+                        <p style="margin-top: 10px; font-weight: bold; color: #333;">PPT文档</p>
+                    </div>
+                </div>
+                <p>扫描二维码访问PPT</p>
+            </div>
+            
+            <div class="qr-code">
+                <div style="width: 150px; height: 150px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #eee;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-file-excel" style="font-size: 50px; color: #166c40;"></i>
+                        <p style="margin-top: 10px; font-weight: bold; color: #333;">Excel表格</p>
+                    </div>
+                </div>
+                <p>扫描二维码访问Excel</p>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="gov-seal"></div>
+            <p>政务数据法规分析平台 &copy; 2023 | 本平台内容仅用于学术研究与教学展示</p>
+            <p>数据来源：国家政务公开信息平台、苏州市政府公开数据</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">技术支持：苏州市政府信息中心</p>
+        </footer>
+    </div>
+</body>
+</html>
